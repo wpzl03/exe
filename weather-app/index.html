@@ -382,6 +382,9 @@
   });
   document.getElementById("locBtn").addEventListener("click", loadMyLocation);
 
+  // 내 PC 서버(실행.bat)로 열었을 때만 주식·메일 수 기능을 씀. 깃허브 페이지 등 배포판에서는 숨김
+  const HAS_SERVER = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
   // 4) 주식 시장 — serve.ps1 서버의 /api/stock 이 Yahoo Finance 시세를 중계해 줌
   const STOCKS = [
     ["^KS11", "코스피"], ["^KQ11", "코스닥"], ["005930.KS", "삼성전자"],
@@ -394,6 +397,7 @@
 
   async function loadStocks() {
     const box = document.getElementById("stocks");
+    if (!HAS_SERVER) { box.innerHTML = ""; return; }
     const head = `<div class="card-head"><h2>📈 주식 시장</h2><button type="button" class="secondary" id="stockRefresh">새로고침</button></div>`;
     box.innerHTML = `<section class="card">${head}<p class="msg">불러오는 중…</p></section>`;
     try {
@@ -448,6 +452,7 @@
   }
 
   async function loadMail() {
+    if (!HAS_SERVER) return;   // 서버 없으면 네이버 메일 링크만
     try {
       const res = await fetch("/api/mail");
       if (!res.ok) throw new Error();
@@ -463,7 +468,7 @@
 
   // 로그인 전이면 버튼을 눌렀을 때 네이버로 가지 않고 로그인 창을 엶
   badge.addEventListener("click", (e) => {
-    if (mailLoggedIn || location.protocol === "file:") return;
+    if (mailLoggedIn || !HAS_SERVER) return;
     e.preventDefault();
     loginForm.hidden = !loginForm.hidden;
     if (!loginForm.hidden) document.getElementById("mailId").focus();
