@@ -466,6 +466,11 @@ function parseOrder(text) {
     .replace(/01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/, "")
     .split(/\s*\/\s*|\s+(?=(?:입금자|택배|부탁|보내|주문|감사|요청|배송|부재|문\s*앞))/)[0]   // 주소 뒤에 붙은 요청 문구 잘라내기
     .replace(/[\s,.]+$/, "").replace(/\s{2,}/g, " ").trim();
+  // 주소 뒤에 이어진 품목("... 77 고구마 2박스") 잘라내기
+  const kwAlt = settings.products.map((p) => keywordOf(p.name).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  if (kwAlt) r.address = r.address.split(new RegExp(`\\s+(?=(?:${kwAlt})\\s*(?:\\d|한|하나|두|둘|세|셋|네|넷|다섯|박스|상자|kg|키로))`))[0].trim();
+  // 주소 끝에 붙은 주문자 이름 빼기 ("... 배곧로 12 김하나")
+  if (r.name) r.address = r.address.replace(new RegExp(`\\s+${r.name}$`), "").trim();
 
   r.depositor = label(/입금자\s*명?\s*[:：]?\s*([가-힣]{2,5})/);
   r.memo = label(/(?:요청\s*사항|배송\s*메모|메모|요청)\s*[:：]?\s*([^\n]+)/);
