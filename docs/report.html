@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>국내 농산물 직거래 프로그램 현황 보고서</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: #1a1a1a; background: #fff;
+    font-family: "Malgun Gothic", "맑은 고딕", sans-serif; font-size: 10.2pt; line-height: 1.62;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .cover-title { text-align: center; padding: 6px 0 14px; border-top: 3px solid #1f3864; border-bottom: 1px solid #1f3864; margin-bottom: 10px; }
+  .cover-title .t { font-size: 20pt; font-weight: 700; color: #1f3864; letter-spacing: 1px; }
+  .cover-title .s { font-size: 10.5pt; color: #444; margin-top: 2px; }
+  .meta { text-align: right; font-size: 9.5pt; color: #333; margin-bottom: 14px; }
+  .meta .blank { color: #aaa; }
+
+  h2 { font-size: 12.5pt; color: #1f3864; margin: 20px 0 8px; padding-left: 9px; border-left: 5px solid #1f3864; page-break-after: avoid; }
+  h3 { font-size: 10.8pt; margin: 12px 0 6px; page-break-after: avoid; }
+  p { margin: 0 0 8px; }
+  ul { margin: 4px 0 8px; padding-left: 20px; }
+  li { margin-bottom: 3px; }
+
+  .summary { border: 1.5px solid #1f3864; border-radius: 6px; padding: 12px 16px; margin: 0 2px 6px 0; background: #f5f7fb; page-break-inside: avoid; }
+  .summary .h { font-weight: 700; color: #1f3864; font-size: 11pt; margin-bottom: 6px; }
+  .summary ul { margin: 0; }
+
+  table.t { width: calc(100% - 2px); border-collapse: collapse; margin: 6px 0 10px; font-size: 9.3pt; page-break-inside: avoid; }
+  table.t th, table.t td { border: 1px solid #9aa3b5; padding: 6px 8px; vertical-align: top; }
+  table.t th { background: #1f3864; color: #fff; font-weight: 600; text-align: center; }
+  table.t td.c { text-align: center; }
+  table.t td.r { text-align: right; white-space: nowrap; }
+  table.t td.cat { background: #eef1f6; font-weight: 700; text-align: center; vertical-align: middle; }
+  table.t.breakable { page-break-inside: auto; }
+  table.t tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  .src { font-size: 8.3pt; color: #666; }
+  .warn { color: #9a5b00; font-size: 8.6pt; }
+  .note { font-size: 8.8pt; color: #555; margin-top: -4px; }
+  .up { color: #b42318; font-weight: 700; }
+
+  .kpis { display: flex; gap: 8px; margin: 8px 2px 12px 0; page-break-inside: avoid; }
+  .kpi { flex: 1; border: 1px solid #c9d1e0; border-radius: 6px; padding: 9px 10px; background: #fff; }
+  .kpi .l { font-size: 8.5pt; color: #555; }
+  .kpi .v { font-size: 15pt; font-weight: 700; color: #1f3864; line-height: 1.3; }
+  .kpi .d { font-size: 8.4pt; color: #444; }
+
+  .box { border: 1px solid #c9d1e0; background: #f5f7fb; border-radius: 6px; padding: 10px 14px; margin: 8px 2px 12px 0; page-break-inside: avoid; }
+  .box b { color: #1f3864; }
+
+  ol.refs { font-size: 8.4pt; color: #333; padding-left: 22px; line-height: 1.5; }
+  ol.refs li { margin-bottom: 2px; word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div class="cover-title">
+  <div class="t">국내 농산물 직거래 프로그램 현황 보고서</div>
+  <div class="s">온라인 플랫폼 · 공공/지자체 쇼핑몰 · 오프라인 직거래 · 판매자용 주문관리 도구</div>
+</div>
+<div class="meta">보고일자: 2026. 11. 7.&nbsp;&nbsp;|&nbsp;&nbsp;작성: <span class="blank">(작성)</span>&nbsp;&nbsp;|&nbsp;&nbsp;조사 기준: 2026년 11월 공개 자료</div>
+
+<div class="summary">
+  <div class="h">■ 핵심 요약</div>
+  <ul>
+    <li>2025년 <b>농축수산물 온라인 거래액은 약 14.5조 원</b>으로 전년 대비 약 12.9% 늘어, 전체 온라인쇼핑 성장률(4.9%)보다 빠르게 성장하고 있음</li>
+    <li>정부가 운영하는 <b>농수산물 온라인도매시장</b>은 2025년 거래액 1조 원을 넘겼고(전년 동기 대비 약 2.9배), 2030년 7조 원을 목표로 확대 중</li>
+    <li><b>지자체 농특산물 쇼핑몰</b>이 빠르게 성장 중: 전남 「남도장터」 2025년 매출 590억 원(+21%), 경북 「사이소」 2025년 상반기 230억 원(+40.5%)</li>
+    <li>쿠팡·카카오 등 <b>대형 플랫폼</b>도 산지직송·지자체 연계를 늘리고 있으나, 주로 노출·물류를 플랫폼이 쥐는 구조</li>
+    <li>반면 <b>문자·카카오톡으로 단골 주문을 받는 소규모 직거래</b>는 전용 관리 도구가 거의 없어 엑셀 수작업에 의존 → <b>자체 주문관리 시스템의 필요성 확인</b></li>
+  </ul>
+</div>
+
+<h2>Ⅰ. 조사 개요</h2>
+<table class="t">
+  <tr><th style="width:18%">구분</th><th>내용</th></tr>
+  <tr><td class="c">목적</td><td>국내에서 쓰이는 농산물 직거래 프로그램(판매 채널·관리 도구)의 현황을 파악하여 당사 직거래 운영 방향과 주문관리 시스템 도입 검토에 활용</td></tr>
+  <tr><td class="c">범위</td><td>① 온라인 시장 규모 ② 공공 온라인도매 ③ 지자체·공공기관 쇼핑몰 ④ 민간 대형 플랫폼 ⑤ 오프라인 직거래 ⑥ 판매자용 주문관리 도구 ⑦ 관련 정책</td></tr>
+  <tr><td class="c">방법</td><td>정부·공공기관 보도자료, 통계 발표, 언론 보도, 기업 발표 자료 조사 (2026년 11월 기준)</td></tr>
+  <tr><td class="c">유의 사항</td><td>일부 수치는 언론 보도나 업체 자체 발표 기준이며, 해당 수치에는 표에 <span class="warn">※</span> 표시함. 결재·대외 인용 시 원문 확인 필요</td></tr>
+</table>
+
+<h2>Ⅱ. 시장 현황</h2>
+<div class="kpis">
+  <div class="kpi"><div class="l">농축수산물 온라인 거래액 (2025)</div><div class="v">14.5조 원</div><div class="d">전년 12.8조 → <span class="up">+12.9%</span> <span class="warn">※</span></div></div>
+  <div class="kpi"><div class="l">전체 온라인쇼핑 거래액 (2025)</div><div class="v">272.0조 원</div><div class="d">전년 대비 +4.9%, 역대 최대</div></div>
+  <div class="kpi"><div class="l">온라인도매시장 거래액 (2025)</div><div class="v">1조 원 돌파</div><div class="d">11/3 기준, 전년 동기 대비 약 2.9배</div></div>
+</div>
+<ul>
+  <li><b>성장 속도:</b> 농축수산물 온라인 거래는 전체 온라인쇼핑보다 2배 이상 빠르게 성장. 2025년 1분기 거래액(3조 7,055억 원)은 2019년 4분기(9,801억 원)의 약 3.8배</li>
+  <li><b>모바일 중심:</b> 2025년 전체 모바일 거래액은 211조 원(+6.5%)이며, 농축수산물 모바일 거래는 14.5% 증가 <span class="warn">※</span></li>
+  <li><b>명절 수요 집중:</b> 2025년 1월(설) 농축수산물 거래액 1조 4,787억 원으로 전년 동월 대비 22.6% 증가 → 명절 기획 판매가 매출에 큰 영향</li>
+</ul>
+<p class="note">※ 2025년 연간 농축수산물 거래액은 언론 보도(한국영농신문) 수치이며, 전체 거래액은 국가데이터처(구 통계청) 「2025년 12월 및 연간 온라인쇼핑동향」(2026. 2. 2.) 기준</p>
+
+<h2>Ⅲ. 유형별 직거래 프로그램 현황</h2>
+<table class="t breakable">
+  <thead><tr><th style="width:13%">유형</th><th style="width:21%">대표 프로그램</th><th>현황 (최근 공개 수치)</th><th style="width:21%">특징</th></tr></thead>
+  <tr><td class="cat" rowspan="1">공공<br>온라인도매</td>
+    <td><b>농수산물 온라인도매시장</b><br><span class="src">농식품부·aT 운영</span></td>
+    <td>2025년 11월 3일 기준 거래액 1조 원 돌파(전년 동기 3,392억 원의 약 2.9배), 연말 약 1.17조 원 전망<br>참여 업체 3,804 → 5,272개소(+39%)<br>청과 부류 산지-소비지 직거래 비중 28% → 44.1%<br>2030년 거래액 7조 원 목표</td>
+    <td>B2B(기업 간) 거래 중심. 개별 농가보다는 산지조직·유통업체가 주로 참여</td></tr>
+  <tr><td class="cat" rowspan="2">지자체<br>쇼핑몰</td>
+    <td><b>남도장터</b> (전남)</td>
+    <td>2025년 매출 590억 원(전년 대비 +21%), 자사몰 매출 184억 원(+39%, 역대 최고)<br>2026년 설 기획전 112억 원(설 명절 최대)</td>
+    <td rowspan="2">지자체가 입점 농가를 모집하고 홍보·할인·배송비를 지원. 지역 농가 입점 문턱이 낮음</td></tr>
+  <tr>
+    <td><b>사이소</b> (경북)</td>
+    <td>2025년 상반기 매출 230억 원(전년 동기 164억 원 대비 +40.5%)<br>2026년 상반기 249억 원(최고 실적), 회원 32만 명 이상, 연 570억 원 목표</td></tr>
+  <tr><td class="cat">공공기관<br>쇼핑몰</td>
+    <td><b>우체국쇼핑</b><br><span class="src">우정사업본부</span><br><b>농협몰</b></td>
+    <td>우체국쇼핑: 2021년 매출 2,287억 원, 2017년 이후 연평균 5.8% 성장, 5년 누적 1조 1,009억 원 <span class="warn">※ 2022년 보도 기준</span><br>농협몰: 최근 매출 수치 공개 자료 확인 안 됨</td>
+    <td>공공기관 신뢰도, 전국 배송망. 명절 선물 수요에 강함</td></tr>
+  <tr><td class="cat" rowspan="3">민간<br>대형 플랫폼</td>
+    <td><b>쿠팡</b> (산지직송·직매입)</td>
+    <td>2025년 지방 농어촌 과일·수산물 9,400톤 직매입 <span class="warn">※ 쿠팡 발표</span><br>수산물 산지직송 매입 2021년 500톤 → 2024년 1,500톤</td>
+    <td>빠른 배송·대량 매입. 가격·규격 조건이 엄격</td></tr>
+  <tr>
+    <td><b>카카오 톡딜·선물하기</b></td>
+    <td>2019년 2인 공동구매 「톡딜」 출시, 지자체와 협약해 지역 농산물 판매<br>2025년 6월 aT와 협약: 온라인도매시장 상품을 톡딜·선물하기로 판매</td>
+    <td>카카오톡 이용자 기반, 선물 수요. 기획전 중심</td></tr>
+  <tr>
+    <td><b>네이버 스마트스토어</b></td>
+    <td>농가가 직접 개설하는 대표적 온라인 판매 채널. 농산물 부문 공식 통계는 확인 안 됨</td>
+    <td>개설 쉬움, 검색 노출. 상세페이지·광고 등 운영 부담</td></tr>
+  <tr><td class="cat" rowspan="2">오프라인<br>직거래</td>
+    <td><b>로컬푸드 직매장</b></td>
+    <td>전국 매장 수는 집계 기준에 따라 100여~800여 곳으로 자료마다 차이<br>농협 운영 지역먹거리 직매장 32곳 중 울산 매장 2025년 매출 84억 원(전국 1위)<br>2025년 농식품부 직매장 지원사업 8개소 선정</td>
+    <td>당일 출하, 농가가 가격 결정. 매장 인근 소비자 한정</td></tr>
+  <tr>
+    <td><b>직거래장터·이동장터</b></td>
+    <td>2026년 「도농상생장터」 10개소 선정·운영(온라인 판매 마케터·스마트 스튜디오 지원 포함)<br>농촌형 이동장터 9곳 → 30곳 확대(2026)</td>
+    <td>도시 소비자와 대면 판매, 단골 고객 확보 기회</td></tr>
+</table>
+
+<h2>Ⅳ. 판매자용 주문관리 도구 현황</h2>
+<table class="t">
+  <tr><th style="width:22%">유형</th><th style="width:22%">대표 예시</th><th>내용</th><th style="width:20%">소규모 직거래 농가 적합도</th></tr>
+  <tr><td>통합 주문관리 솔루션</td><td>사방넷, 플레이오토</td>
+    <td>여러 온라인 쇼핑몰의 주문 수집·상품 등록·재고·CS를 한 곳에서 처리. 사방넷은 약 600여 개 쇼핑몰 연동, 플레이오토는 이용 셀러 23만 명이라고 소개 <span class="warn">※ 업체 발표</span></td>
+    <td class="c">낮음<br><span class="src">쇼핑몰 판매자용,<br>문자·카톡 주문은 대상 아님</span></td></tr>
+  <tr><td>플랫폼 자체 관리 기능</td><td>스마트스토어 판매자센터, 지자체몰 관리자 화면</td>
+    <td>해당 플랫폼에서 들어온 주문만 관리 가능</td>
+    <td class="c">보통<br><span class="src">플랫폼 판매분만</span></td></tr>
+  <tr><td>엑셀 수작업</td><td>엑셀·노트</td>
+    <td>문자·카톡 주문을 사람이 옮겨 적고, 입금은 은행 내역과 눈으로 대조</td>
+    <td class="c">현재 가장 흔함<br><span class="src">오기·누락 위험</span></td></tr>
+  <tr><td>맞춤 제작·기타</td><td>외주 제작 엑셀 프로그램, 채팅 캡처 정리 도구</td>
+    <td>엑셀 기반 주문·정산 프로그램 외주 제작 서비스, 카톡 공동구매 캡처에서 주문을 추출하는 도구 등이 있으나 농가 직거래 전용은 아님</td>
+    <td class="c">보통<br><span class="src">비용·범위 제각각</span></td></tr>
+</table>
+<div class="box"><b>확인된 공백:</b> 문자·카카오톡으로 들어오는 <b>단골 직거래 주문</b>을 받아 주문서 작성 → 입금 확인 → 발송까지 처리해 주는 <b>소규모 농가용 도구는 사실상 없음</b>. 카카오톡(개인)과 인터넷 뱅킹은 외부 연동을 지원하지 않아, 붙여넣기 기반의 반자동 방식이 현실적인 대안임.</div>
+
+<h2>Ⅴ. 관련 정책·제도</h2>
+<table class="t">
+  <tr><th style="width:30%">구분</th><th>내용</th></tr>
+  <tr><td>법적 근거</td><td>「지역농산물 이용촉진 등 농산물 직거래 활성화에 관한 법률」 (2015. 6. 22. 제정, 2016. 6. 23. 시행)</td></tr>
+  <tr><td>온라인도매시장 확대</td><td>2030년까지 연간 거래액 7조 원 목표, 산지-소비지 직거래 비중 확대</td></tr>
+  <tr><td>직거래장터 지원</td><td>2026년부터 특·광역시와 시군이 협력하는 「도농상생장터」 10개소 운영, 온라인 판매 마케터·스마트 스튜디오 지원</td></tr>
+  <tr><td>로컬푸드 직매장 지원</td><td>2019년부터 직매장 지원사업 추진, 2025년 22개소 신청 중 8개소 선정</td></tr>
+  <tr><td>농촌 식품 접근성</td><td>농촌형 이동장터 9곳 → 30곳 확대(2026), 이동형·주문배달형 등 지역 맞춤 운영</td></tr>
+</table>
+
+<h2>Ⅵ. 시사점 및 당사 적용 방향</h2>
+<h3>가. 시사점</h3>
+<ul>
+  <li><b>온라인 직거래는 계속 커지는 시장</b> — 농축수산물 온라인 거래가 전체 온라인보다 빠르게 성장하고, 정부도 온라인도매·직거래를 정책적으로 밀고 있음</li>
+  <li><b>지자체몰은 소규모 농가에 유리한 채널</b> — 입점 문턱이 낮고 홍보·할인 지원이 있으며 성장세가 뚜렷함</li>
+  <li><b>대형 플랫폼은 판로는 넓지만 주도권은 플랫폼에</b> — 가격·규격 조건과 수수료가 있고, 고객 정보·단골 관계가 농가에 남지 않음</li>
+  <li><b>단골 직거래는 수익성이 가장 좋지만 관리 도구가 없음</b> — 문자·카톡 주문은 여전히 수작업에 의존하여, 주문이 늘수록 실수와 시간 부담이 커짐</li>
+</ul>
+<h3>나. 당사 적용 방향 (제안)</h3>
+<table class="t">
+  <tr><th style="width:14%">단계</th><th style="width:28%">채널</th><th>추진 내용</th></tr>
+  <tr><td class="c"><b>1단계</b></td><td>단골 직거래 (문자·카톡)</td><td>자체 <b>「친환경농산물 직거래 주문관리 시스템」</b> 시범 운영으로 주문·입금·발송 업무 표준화 (별도 기안 상신 중)</td></tr>
+  <tr><td class="c"><b>2단계</b></td><td>지자체 농특산물 쇼핑몰, 우체국쇼핑</td><td>지역 지자체몰 입점 조건 확인 및 입점 검토, 명절 기획전 참여</td></tr>
+  <tr><td class="c"><b>3단계</b></td><td>네이버 스마트스토어 등</td><td>물량·인력 여건을 보고 신규 고객 확보용 온라인 채널 개설 검토</td></tr>
+</table>
+
+<h2>Ⅶ. 조사의 한계</h2>
+<ul>
+  <li>2025년 농축수산물 온라인 거래액(14.5조 원)은 언론 보도 수치로, 국가데이터처 원자료 확인이 필요함</li>
+  <li>온라인도매시장 2025년 연간 확정치는 공식 발표(11월 기준 1조 원 돌파, 연말 약 1.17조 원 전망)와 언론 보도(1.2조 원) 사이에 차이가 있음</li>
+  <li>로컬푸드 직매장 수는 기관·집계 기준(직거래장터·숍인숍 포함 여부 등)에 따라 100여~800여 곳으로 크게 다름</li>
+  <li>쿠팡·플레이오토 등 민간 기업 수치는 해당 기업 발표 자료이며, 농협몰·네이버 스마트스토어의 농산물 부문 수치는 공개 자료로 확인되지 않음</li>
+</ul>
+
+<h2>참고 자료</h2>
+<ol class="refs">
+  <li>국가데이터처, 「온라인쇼핑동향」 보도자료 (2026. 2. 2.) — https://mods.go.kr/boardDownload.es?bid=241&amp;list_no=443337&amp;seq=1</li>
+  <li>한국영농신문, 「농축수산물 온라인 거래액 14조원 돌파…모바일 거래 급증 특징」 — http://www.youngnong.co.kr/news/articleView.html?idxno=57419</li>
+  <li>SBS Biz, 「1월 온라인쇼핑 21.9조원…명절 특수로 '역대 최대'」 — https://biz.sbs.co.kr/amp/article/20000221059</li>
+  <li>다음뉴스, 「5년새 4배 성장···신선식품 '최대 격전지' 된 온라인」 (2025. 5. 28.) — https://v.daum.net/v/20250528174759818</li>
+  <li>대한민국 정책브리핑, 「농수산물 온라인도매시장, 2025년 거래실적 1조 원 달성!」 — https://www.korea.kr/briefing/pressReleaseView.do?newsId=156724965</li>
+  <li>헤럴드경제, 「농수산물 온라인도매시장 거래액 1조원 돌파…작년의 3배」 — https://www.heraldk.com/article/2025110318212836531</li>
+  <li>세계일보, 「거래액 2025년 1.2조… 2024년比 84% ↑」 — https://segye.com/newsView/20260624520951</li>
+  <li>파이낸셜뉴스, 남도장터 2025년 매출 590억원 — https://www.fnnews.com/news/202601071325208540</li>
+  <li>서울신문, 「경북 '사이소' 상반기 매출 230억 돌파」 — https://m.go.seoul.co.kr/news/2025/08/04/20250804021003</li>
+  <li>아시아경제, Gyeongbuk Agricultural Specialty Mall Saiso Sees 40% Sales Surge — https://www.asiae.co.kr/en/article/2025080318025478101</li>
+  <li>주간경향, 「우체국쇼핑을 이용하는 이유」 (2022) — https://weekly.khan.co.kr/article/202206171120401</li>
+  <li>바이라인네트워크, 「쿠팡 "지난해 지방 농어촌 과일·수산물 9400톤 직매입"」 — https://byline.network/2026/02/03_192873/</li>
+  <li>시사경제, 「쿠팡, 산지직송 수산물 '역대 최대'」 — https://sateconomy.co.kr/news/view/1065587688163769</li>
+  <li>카카오, 지역 농가 상생 관련 발표 — https://www.kakaocorp.com/page/detail/11598 , https://www.kakaocorp.com/page/detail/8711</li>
+  <li>헤럴드경제, 울산 로컬푸드 직매장 매출 '성장세' (2026. 3.) — https://www.heraldk.com/article/2026031118222031897</li>
+  <li>프레시안, 「농가 소득 높이고 지역경제 움직이는 로컬푸드 직매장의 확산과 그 의미」 (2025. 9.) — https://www.pressian.com/pages/articles/2025090514503340647</li>
+  <li>서울신문, 「로컬푸드 직매장, 지역 경제의 새성장 동력」 (2025. 6.) — https://www.seoul.co.kr/news/society/2025/06/26/20250626500061</li>
+  <li>전북특별자치도, 「2025년 로컬푸드 직매장 지원사업」 — https://www.jeonbuk.go.kr/newsroom/board/view.jeonbuk?boardId=BBS_0000090&amp;dataSid=589999</li>
+  <li>농림축산식품부, 직거래장터 관련 보도자료 — https://www.mafra.go.kr/bbs/home/792/579155/artclView.do</li>
+  <li>다음뉴스, 「농식품부, 2026년 5대 중점과제 추진」 — https://v.daum.net/v/20251211192400814</li>
+  <li>위키문헌, 「지역농산물 이용촉진 등 농산물 직거래 활성화에 관한 법률」 — https://ko.wikisource.org/wiki/지역농산물_이용촉진_등_농산물_직거래_활성화에_관한_법률</li>
+  <li>고도몰 블로그, 「자사몰과 오픈마켓을 한 번에 관리하는 방법」 — https://www.godo.co.kr/main/blog/32/</li>
+  <li>App Store, 「플레이오토 2.0」 — https://apps.apple.com/kr/app/id6743103087</li>
+  <li>크몽, 엑셀 주문관리 프로그램 제작 서비스 예시 — https://kmong.com/gig/467875</li>
+</ol>
+
+</body>
+</html>

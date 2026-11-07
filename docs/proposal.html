@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>친환경농산물 직거래 주문관리 시스템 도입 기획안</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; color: #1a1a1a; background: #fff;
+    font-family: "Malgun Gothic", "맑은 고딕", sans-serif; font-size: 10.3pt; line-height: 1.62;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+
+  /* ── 기안서 표지 ── */
+  .doc-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .doc-title { font-size: 24pt; font-weight: 700; letter-spacing: 14px; margin-top: 10px; }
+  table.approve { border-collapse: collapse; margin-right: 2px; }
+  table.approve th, table.approve td { border: 1px solid #333; text-align: center; width: 78px; }
+  table.approve th { background: #eef1f6; font-weight: 600; font-size: 9.5pt; padding: 3px 0; }
+  table.approve td { height: 62px; }
+  table.approve th.side { width: 26px; writing-mode: vertical-rl; letter-spacing: 6px; padding: 6px 0; }
+
+  table.info { width: calc(100% - 2px); border-collapse: collapse; margin-bottom: 18px; }
+  table.info th, table.info td { border: 1px solid #333; padding: 7px 10px; }
+  table.info th { background: #eef1f6; width: 16%; font-weight: 600; text-align: center; }
+  table.info td.subject { font-weight: 700; font-size: 11.5pt; }
+  .blank { color: #aaa; }
+
+  .body-text p { margin: 0 0 8px; }
+  .center { text-align: center; }
+  .end { text-align: right; font-weight: 600; margin-top: 4px; }
+
+  /* ── 공통 ── */
+  h1 { font-size: 17pt; margin: 0 0 4px; color: #1f3864; }
+  .subtitle { color: #555; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2.5px solid #1f3864; }
+  h2 { font-size: 12.5pt; color: #1f3864; margin: 20px 0 8px; padding-left: 9px; border-left: 5px solid #1f3864; page-break-after: avoid; }
+  h3 { font-size: 10.8pt; margin: 12px 0 6px; page-break-after: avoid; }
+  ul { margin: 4px 0 8px; padding-left: 20px; }
+  li { margin-bottom: 3px; }
+  table.t { width: calc(100% - 2px); border-collapse: collapse; margin: 6px 0 10px; font-size: 9.6pt; page-break-inside: avoid; }
+  table.t th, table.t td { border: 1px solid #9aa3b5; padding: 6px 8px; vertical-align: top; }
+  table.t th { background: #1f3864; color: #fff; font-weight: 600; text-align: center; }
+  table.t td.c { text-align: center; }
+  table.t td.r { text-align: right; white-space: nowrap; }
+  table.t tr.total td { background: #eef1f6; font-weight: 700; }
+  .good { color: #1d6b3a; font-weight: 600; }
+  .bad { color: #b42318; }
+  .note { font-size: 8.8pt; color: #555; margin-top: -4px; }
+  .box { margin-right: 2px !important; border: 1px solid #c9d1e0; background: #f5f7fb; border-radius: 6px; padding: 10px 14px; margin: 8px 0 12px; page-break-inside: avoid; }
+  .box b { color: #1f3864; }
+
+  /* 업무 흐름 */
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 10px 2px 6px 0; page-break-inside: avoid; }
+  .flow .step { flex: 1; border: 1.5px solid #1f3864; border-radius: 6px; padding: 8px 6px; text-align: center; background: #f5f7fb; }
+  .flow .step .n { display: inline-block; width: 20px; height: 20px; line-height: 20px; border-radius: 50%; background: #1f3864; color: #fff; font-size: 8.5pt; font-weight: 700; }
+  .flow .step .tt { font-weight: 700; margin: 3px 0 2px; font-size: 9.8pt; }
+  .flow .step .d { font-size: 8.4pt; color: #444; line-height: 1.4; }
+  .flow .arrow { align-self: center; padding: 0 4px; color: #1f3864; font-weight: 700; }
+
+  figure { margin: 8px 0 14px; page-break-inside: avoid; }
+  figure .shot { width: 80%; margin: 0 auto; border: 1px solid #b8c0cf; border-radius: 4px; overflow: hidden; }
+  figure .shot img { width: 100%; display: block; }
+  figure .crop-list { aspect-ratio: 1100 / 865; }
+  figure .crop-input { aspect-ratio: 1100 / 610; }
+  figcaption { font-size: 8.8pt; color: #555; text-align: center; margin-top: 4px; }
+
+  /* 일정표 */
+  table.gantt td.bar { padding: 0; }
+  table.gantt td.bar div { height: 14px; margin: 4px 3px; border-radius: 3px; background: #1f3864; }
+  table.gantt td.bar div.lt { background: #8fa3c7; }
+</style>
+</head>
+<body>
+
+<!-- ═════════════ 1쪽: 기안서 ═════════════ -->
+<section class="page">
+  <div class="doc-head">
+    <div class="doc-title">기 안 서</div>
+    <table class="approve">
+      <tr><th class="side" rowspan="2">결재</th><th>담 당</th><th>차 장</th></tr>
+      <tr><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <table class="info">
+    <tr><th>문서번호</th><td><span class="blank">(작성)</span></td><th>기안일자</th><td>2026. 11. 7.</td></tr>
+    <tr><th>기안부서</th><td><span class="blank">(작성)</span></td><th>기 안 자</th><td><span class="blank">(작성)</span></td></tr>
+    <tr><th>시행일자</th><td>승인 후 즉시</td><th>보존기간</th><td>3년</td></tr>
+    <tr><th>제&nbsp;&nbsp;&nbsp;&nbsp;목</th><td class="subject" colspan="3">친환경농산물 직거래 주문관리 시스템 도입(시범 운영) 승인 요청</td></tr>
+  </table>
+
+  <div class="body-text">
+    <p>1. 현재 친환경농산물 직거래 주문은 문자·카카오톡으로 접수하여 담당자가 엑셀에 직접 옮겨 적고, 입금은 인터넷 뱅킹 내역을 눈으로 대조하여 확인한 뒤 발송하고 있습니다.</p>
+    <p>2. 이 과정에서 반복 입력에 따른 시간 소요, 주소·수량 오기, 입금 확인 누락 등의 문제가 발생하고 있어, 이를 개선하기 위해 자체 개발한 <b>「친환경농산물 직거래 주문관리 시스템」</b>의 시범 운영을 아래와 같이 추진하고자 하오니 검토 후 승인하여 주시기 바랍니다.</p>
+  </div>
+
+  <p class="center" style="margin:14px 0 8px; font-weight:700;">- 아 래 -</p>
+
+  <table class="t">
+    <tr><th style="width:20%">구분</th><th>내용</th></tr>
+    <tr><td class="c"><b>사 업 명</b></td><td>친환경농산물 직거래 주문관리 시스템 도입(시범 운영)</td></tr>
+    <tr><td class="c"><b>목 적</b></td><td>주문 접수 → 엑셀 주문장 → 입금 확인 → 발송 업무를 한 화면에서 처리하여 업무 시간 단축 및 오류 감소</td></tr>
+    <tr><td class="c"><b>주요 기능</b></td><td>주문 메시지 자동 읽기 · 엑셀 주문장 자동 기록 · 입금 내역 자동 대조 · 포장 목록/택배 접수 엑셀 · 고객 안내 문자 자동 작성</td></tr>
+    <tr><td class="c"><b>추진 기간</b></td><td>2026. 11. 9.(월) ~ 12. 4.(금), 4주 (준비 1주 · 시범 운영 2주 · 평가 1주)</td></tr>
+    <tr><td class="c"><b>소요 예산</b></td><td><b>0원</b> (자체 개발 완료, 무료 서비스 활용 / 선택 장비는 필요 시 별도 품의)</td></tr>
+    <tr><td class="c"><b>기대 효과</b></td><td>주문 처리 시간 하루 약 70분 단축(추정), 입력 오류·입금 누락 감소, 고객 응대 속도 향상</td></tr>
+    <tr><td class="c"><b>시연 주소</b></td><td>https://wpzl03.github.io/exe/farm-orders/</td></tr>
+  </table>
+
+  <p style="margin-top:16px;">붙임&nbsp;&nbsp;세부 기획안 1부.&nbsp;&nbsp;&nbsp;끝.</p>
+</section>
+
+<!-- ═════════════ 2쪽~: 세부 기획안 ═════════════ -->
+<section class="page">
+  <h1>친환경농산물 직거래 주문관리 시스템 도입 기획안</h1>
+  <p class="subtitle">문자·카톡 주문부터 입금 확인, 발송까지 — 한 화면에서 처리하는 주문관리 도구</p>
+
+  <h2>1. 추진 배경</h2>
+  <h3>가. 현재 업무 방식과 문제점</h3>
+  <table class="t">
+    <tr><th style="width:15%">단계</th><th style="width:40%">현재 방식</th><th>문제점</th></tr>
+    <tr><td class="c">주문 접수</td><td>문자·카톡 메시지를 보고 엑셀에 이름·연락처·주소·품목을 직접 입력</td><td class="bad">건마다 반복 입력, 주소·수량 오기 발생, 바쁜 시간대 주문 누락</td></tr>
+    <tr><td class="c">입금 안내</td><td>고객마다 계좌·금액 안내 문자를 직접 작성</td><td class="bad">금액 계산 실수, 응답 지연</td></tr>
+    <tr><td class="c">입금 확인</td><td>인터넷 뱅킹 내역과 엑셀을 눈으로 하나씩 대조</td><td class="bad">입금자명이 다르면 확인 어려움, 확인 누락으로 발송 지연</td></tr>
+    <tr><td class="c">발송</td><td>엑셀에서 주소를 다시 옮겨 택배 접수, 송장번호 따로 안내</td><td class="bad">이중 작업, 발송 여부 파악 어려움</td></tr>
+    <tr><td class="c">고객 관리</td><td>과거 주문은 엑셀 파일을 뒤져서 확인</td><td class="bad">단골 고객 주소를 매번 다시 물어봄</td></tr>
+  </table>
+
+  <h3>나. 개선 필요성</h3>
+  <ul>
+    <li>직거래 주문은 대부분 <b>짧은 메시지 형태</b>로 들어와, 사람이 읽고 옮겨 적는 과정이 업무 시간의 대부분을 차지함</li>
+    <li>입금 확인과 발송이 늦어지면 <b>고객 신뢰</b>에 직접 영향을 줌</li>
+    <li>별도 비용 없이 현재 사용 중인 PC와 엑셀 업무 방식을 그대로 살리면서 개선할 수 있는 방법이 필요함</li>
+  </ul>
+
+  <h2>2. 추진 목적</h2>
+  <div class="box">
+    <b>① 시간 단축</b> — 메시지를 붙여넣으면 주문서가 자동 작성되어 반복 입력 제거<br>
+    <b>② 오류 감소</b> — 주소·수량·금액 자동 계산, 입금자명+금액 자동 대조<br>
+    <b>③ 응대 품질 향상</b> — 입금 안내·입금 확인·발송 안내 문자를 즉시 작성하여 빠르게 회신<br>
+    <b>④ 기록 관리</b> — 모든 주문을 엑셀 주문장(.xlsx)으로 저장하여 기존 업무 방식과 호환
+  </div>
+
+  <h2>3. 시스템 개요</h2>
+  <h3>가. 업무 흐름</h3>
+  <div class="flow">
+    <div class="step"><span class="n">1</span><div class="tt">주문 입력</div><div class="d">문자·카톡 붙여넣기<br>→ 자동 읽기</div></div>
+    <div class="arrow">▶</div>
+    <div class="step"><span class="n">2</span><div class="tt">입금 안내</div><div class="d">계좌·금액 안내<br>문자 자동 작성</div></div>
+    <div class="arrow">▶</div>
+    <div class="step"><span class="n">3</span><div class="tt">입금 확인</div><div class="d">은행 내역 붙여넣기<br>→ 자동 대조</div></div>
+    <div class="arrow">▶</div>
+    <div class="step"><span class="n">4</span><div class="tt">발송</div><div class="d">포장 목록 인쇄<br>택배 접수 엑셀</div></div>
+    <div class="arrow">▶</div>
+    <div class="step"><span class="n">5</span><div class="tt">기록·보관</div><div class="d">엑셀 주문장 저장<br>상품별 집계</div></div>
+  </div>
+
+  <h3>나. 주요 기능</h3>
+  <table class="t">
+    <tr><th style="width:17%">기능</th><th>내용</th></tr>
+    <tr><td class="c"><b>주문 자동 읽기</b></td><td>받은 메시지를 붙여넣으면 이름·연락처·주소·품목·수량·배송 메모를 자동으로 찾아 주문서 작성<br>
+      <span class="note">예) "사과 5kg 2박스랑 고구마 1박스" → 사과 2, 고구마 1 / "배 두 박스" → 배 2 (한글 숫자 인식)</span></td></tr>
+    <tr><td class="c"><b>단골 고객</b></td><td>"사과 3박스 또 보내주세요"처럼 이름만 와도 이전 주문에서 연락처·주소를 자동으로 채움</td></tr>
+    <tr><td class="c"><b>주문 목록</b></td><td>입금대기 → 입금확인 → 발송완료 단계별 관리, 검색, 수정·취소</td></tr>
+    <tr><td class="c"><b>입금 자동 대조</b></td><td>인터넷 뱅킹 거래내역 또는 입금 알림 문자를 붙여넣으면 <b>입금자명 + 금액</b>이 일치하는 주문을 찾아 일괄 처리<br>
+      <span class="note">이름이 다르고 금액만 같은 경우는 "확인 필요"로 따로 표시하여 담당자가 최종 판단</span></td></tr>
+    <tr><td class="c"><b>발송 지원</b></td><td>포장 목록 인쇄(품목별 합계 + 상자별 주문 쪽지), 택배 대량 접수용 엑셀, 송장번호 기록</td></tr>
+    <tr><td class="c"><b>안내 문자</b></td><td>입금 안내 · 입금 확인 · 발송 안내(송장번호 포함) 문자를 자동 작성하여 복사 한 번으로 발송</td></tr>
+    <tr><td class="c"><b>엑셀 연동</b></td><td>주문장(.xlsx) 저장 및 불러오기, 상품별 판매 수량·금액 집계 시트 자동 생성</td></tr>
+  </table>
+
+  <h3>다. 실제 화면 <span style="font-weight:400; font-size:9pt; color:#666;">(예시 데이터)</span></h3>
+  <figure>
+    <div class="shot crop-input"><img src="shot_input.png" alt="주문 입력 화면"></div>
+    <figcaption>[그림 1] 주문 입력 — 카톡 메시지를 붙여넣고 「자동으로 읽기」를 누르면 주문서가 채워짐</figcaption>
+  </figure>
+
+  <figure>
+    <div class="shot crop-list"><img src="shot_list.png" alt="주문 목록 화면"></div>
+    <figcaption>[그림 2] 주문 목록 — 오늘 주문 수, 입금 대기 금액, 발송 대기 건수, 월 매출을 한눈에 확인</figcaption>
+  </figure>
+
+  <h3>라. 운영 환경</h3>
+  <table class="t">
+    <tr><th style="width:20%">항목</th><th>내용</th></tr>
+    <tr><td class="c">사용 장비</td><td>현재 사용 중인 업무용 PC (Windows) 그대로 사용, 별도 설치 없음</td></tr>
+    <tr><td class="c">실행 방법</td><td>웹 브라우저(크롬·엣지)에서 주소 접속 또는 파일 더블클릭</td></tr>
+    <tr><td class="c">데이터 보관</td><td>고객 주문 정보는 <b>업무용 PC의 브라우저에만 저장</b>되며 외부 서버로 전송되지 않음 / 매일 엑셀로 백업</td></tr>
+    <tr><td class="c">권장 연동</td><td>카카오톡 PC버전, Windows 「휴대폰과 연결」(문자를 PC에서 복사), 은행 앱 입금 알림</td></tr>
+  </table>
+
+  <h2>4. 업무 개선 비교</h2>
+  <table class="t">
+    <tr><th style="width:15%">구분</th><th style="width:42%">도입 전</th><th>도입 후</th></tr>
+    <tr><td class="c">주문 기록</td><td>메시지를 보며 엑셀에 한 칸씩 직접 입력</td><td class="good">붙여넣기 → 자동 작성 → 확인 후 저장</td></tr>
+    <tr><td class="c">입금 안내</td><td>계좌·금액 문자를 매번 직접 작성</td><td class="good">저장 즉시 안내 문자 자동 생성</td></tr>
+    <tr><td class="c">입금 확인</td><td>은행 내역과 엑셀을 한 건씩 눈으로 대조</td><td class="good">내역 붙여넣기 → 일치 주문 자동 표시 → 일괄 처리</td></tr>
+    <tr><td class="c">발송 준비</td><td>주소를 다시 옮겨 적어 택배 접수</td><td class="good">택배 접수 엑셀 자동 생성, 포장 목록 인쇄</td></tr>
+    <tr><td class="c">진행 현황</td><td>엑셀을 열어 상태를 일일이 확인</td><td class="good">입금대기·발송대기 건수와 매출을 첫 화면에 표시</td></tr>
+    <tr><td class="c">재주문 고객</td><td>주소·연락처를 다시 문의</td><td class="good">이전 주문에서 자동 입력</td></tr>
+  </table>
+
+  <h2>5. 기대 효과</h2>
+  <h3>가. 정량적 효과 (추정)</h3>
+  <table class="t">
+    <tr><th style="width:30%">항목 (주문 1건 기준)</th><th style="width:20%">도입 전</th><th style="width:20%">도입 후</th><th>비고</th></tr>
+    <tr><td>주문서 작성</td><td class="c">약 2분</td><td class="c">약 0.5분</td><td>붙여넣기 후 확인만</td></tr>
+    <tr><td>입금 안내·확인</td><td class="c">약 1.5분</td><td class="c">약 0.5분</td><td>자동 대조, 일괄 처리</td></tr>
+    <tr><td>발송 준비·안내</td><td class="c">약 1.5분</td><td class="c">약 0.5분</td><td>엑셀·문자 자동 생성</td></tr>
+    <tr class="total"><td>합계 (1건)</td><td class="c">약 5분</td><td class="c">약 1.5분</td><td>건당 약 3.5분 단축</td></tr>
+    <tr class="total"><td>하루 20건 기준</td><td class="c">약 100분</td><td class="c">약 30분</td><td><b>하루 약 70분, 월(22일) 약 25시간 절감</b></td></tr>
+  </table>
+  <p class="note">※ 위 수치는 하루 평균 주문 20건을 가정한 추정치이며, 시범 운영 기간 중 실제 처리 시간을 측정하여 결과 보고 시 수정·보고하겠습니다.</p>
+
+  <h3>나. 정성적 효과</h3>
+  <ul>
+    <li><b>오류 감소</b>: 주소·수량 옮겨 적기 실수, 금액 계산 실수, 입금 확인 누락 방지</li>
+    <li><b>고객 만족</b>: 주문 즉시 입금 안내, 입금 당일 발송 안내로 응대 속도 향상 → 재구매 유도</li>
+    <li><b>업무 표준화</b>: 담당자가 바뀌어도 같은 순서로 처리 가능, 인수인계 용이</li>
+    <li><b>판매 분석</b>: 상품별 판매 수량·금액 집계로 수확·출하 계획에 활용</li>
+  </ul>
+
+  <h2>6. 소요 예산</h2>
+  <table class="t">
+    <tr><th style="width:30%">항목</th><th style="width:18%">금액</th><th>비고</th></tr>
+    <tr><td>시스템 개발</td><td class="r">0원</td><td>자체 개발 완료</td></tr>
+    <tr><td>서버·호스팅</td><td class="r">0원</td><td>무료 서비스(깃허브 페이지) 활용, 별도 서버 불필요</td></tr>
+    <tr><td>유지보수</td><td class="r">0원</td><td>자체 수정·관리</td></tr>
+    <tr class="total"><td>필수 예산 합계</td><td class="r">0원</td><td></td></tr>
+    <tr><td style="color:#555">(선택) 감열 라벨 프린터</td><td class="r" style="color:#555">별도 품의</td><td style="color:#555">택배사 계약 시 지원 여부 먼저 확인</td></tr>
+    <tr><td style="color:#555">(선택) 전자저울 (30kg급)</td><td class="r" style="color:#555">별도 품의</td><td style="color:#555">상자 중량 확인용, 필요 시</td></tr>
+  </table>
+
+  <h2>7. 추진 일정</h2>
+  <table class="t gantt">
+    <tr><th style="width:17%">단계</th><th style="width:21%">기간</th><th style="width:30%">주요 내용</th><th>11/9주</th><th>11/16주</th><th>11/23주</th><th>11/30주</th></tr>
+    <tr><td class="c"><b>1. 준비</b></td><td class="c">11. 9.(월) ~ 11. 13.(금)</td><td>상품·가격·계좌 설정, 담당자 사용 교육(1시간), 고객용 주문 양식 배포</td>
+      <td class="bar"><div></div></td><td></td><td></td><td></td></tr>
+    <tr><td class="c"><b>2. 시범 운영</b></td><td class="c">11. 16.(월) ~ 11. 27.(금)</td><td>기존 엑셀 방식과 <b>병행 운영</b>, 처리 시간·오류 건수 기록</td>
+      <td></td><td class="bar"><div></div></td><td class="bar"><div></div></td><td></td></tr>
+    <tr><td class="c"><b>3. 평가·보고</b></td><td class="c">11. 30.(월) ~ 12. 4.(금)</td><td>시범 운영 결과 보고, 개선 사항 반영, 본 운영 여부 결정</td>
+      <td></td><td></td><td></td><td class="bar"><div class="lt"></div></td></tr>
+  </table>
+  <p class="note">※ 시범 운영 기간에는 기존 엑셀 주문장도 함께 작성하여, 문제가 생겨도 업무에 지장이 없도록 합니다.</p>
+
+  <h2>8. 위험 요소 및 대응 방안</h2>
+  <table class="t">
+    <tr><th style="width:27%">위험 요소</th><th>대응 방안</th></tr>
+    <tr><td>자동 읽기 오류<br><span class="note">(메시지 형식이 제각각)</span></td><td>저장 전 반드시 담당자가 확인·수정하는 단계를 둠 / 고객에게 주문 양식(이름·연락처·주소·품목) 안내로 정확도 향상</td></tr>
+    <tr><td>데이터 유실<br><span class="note">(브라우저 기록 삭제 등)</span></td><td>매일 업무 마감 시 「엑셀로 저장」으로 백업, 지정 폴더에 보관 / 엑셀에서 다시 불러오기 가능</td></tr>
+    <tr><td>고객 개인정보 보호</td><td>고객 정보는 업무용 PC에만 저장되고 외부로 전송되지 않음 / 공개된 시연 주소에는 프로그램만 있고 고객 데이터는 없음 / 백업 엑셀은 지정 폴더에서만 관리, 보관 기간 경과 시 삭제 / PC 화면 잠금 사용</td></tr>
+    <tr><td>카톡·은행 자동 연동 불가</td><td>카카오톡(개인)·인터넷 뱅킹은 외부 프로그램 연동을 지원하지 않으므로 <b>복사·붙여넣기 방식</b>으로 설계 (보안상 오히려 안전)</td></tr>
+    <tr><td>담당자 적응</td><td>화면을 업무 순서(① 입력 → ② 목록 → ③ 입금 → ④ 발송)대로 구성 / 준비 기간에 사용 교육 실시</td></tr>
+  </table>
+
+  <h2>9. 향후 확장 계획 <span style="font-weight:400; font-size:9.5pt; color:#555;">(본 운영 이후 검토)</span></h2>
+  <ul>
+    <li>계약 택배사의 대량 접수 양식에 맞춘 엑셀 자동 변환</li>
+    <li>카카오톡 채널(사업용) 개설 및 주문서 자동응답 연계</li>
+    <li>월별 매출·상품별 판매 추이 보고서</li>
+  </ul>
+
+  <h2>10. 요청 사항</h2>
+  <div class="box">
+    <b>① 시범 운영 승인</b> — 2026. 11. 9. ~ 12. 4. (4주), 기존 방식과 병행<br>
+    <b>② 운영 정보 확정</b> — 판매 상품·가격, 입금 계좌, 택배사 정보<br>
+    <b>③ 결과 보고</b> — 2026. 12. 4.(금)까지 시범 운영 결과(처리 시간·오류 건수) 보고 후 본 운영 여부 결정
+  </div>
+</section>
+
+</body>
+</html>
