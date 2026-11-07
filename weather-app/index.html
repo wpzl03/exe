@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오늘의 날씨</title>
+<style>
+  :root {
+    --bg: #eef3f9;
+    --card: #ffffff;
+    --text: #1d2733;
+    --muted: #6b7785;
+    --accent: #2f6fde;
+    --line: #dde4ee;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10161f;
+      --card: #1a2230;
+      --text: #e8edf3;
+      --muted: #94a0ae;
+      --accent: #6aa0ff;
+      --line: #2a3546;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.4rem; margin: 0; }
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .mail {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px; text-decoration: none;
+    background: var(--card); border: 1px solid var(--line); color: var(--text); font-size: 0.9rem;
+  }
+  .mail:hover { border-color: #03c75a; }
+  .mail b { font-size: 1.15rem; color: #03c75a; }
+  .login .note { margin: 0 0 12px; line-height: 1.5; }
+  .login-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .login-row input {
+    flex: 1 1 140px; min-width: 0; padding: 10px 12px; font-size: 0.95rem;
+    border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text);
+  }
+  .login .msg { padding: 8px 0 0; text-align: left; }
+  .mail .unread { font-size: 0.75rem; color: #fff; background: #d64545; border-radius: 999px; padding: 1px 7px; }
+
+  .search { display: flex; gap: 8px; margin-bottom: 16px; }
+  .search input {
+    flex: 1; min-width: 0;
+    padding: 12px 14px; font-size: 1rem;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: var(--card); color: var(--text);
+  }
+  button {
+    padding: 12px 14px; font-size: 0.95rem; cursor: pointer;
+    border: none; border-radius: 10px;
+    background: var(--accent); color: #fff; white-space: nowrap;
+  }
+  button.secondary { background: var(--card); color: var(--text); border: 1px solid var(--line); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 16px; padding: 20px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 1rem; margin: 0 0 12px; color: var(--muted); font-weight: 600; }
+
+  .now { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .now .icon { font-size: 4rem; line-height: 1; }
+  .now .temp { font-size: 3rem; font-weight: 700; }
+  .now .place { font-size: 1.2rem; font-weight: 600; }
+  .now .desc { color: var(--muted); }
+  .diff {
+    display: inline-block; font-size: 0.85rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 999px; margin: 4px 0;
+  }
+  .diff.up { color: #d64545; background: rgba(214, 69, 69, 0.12); }
+  .diff.down { color: #2f6fde; background: rgba(47, 111, 222, 0.12); }
+  .diff.same { color: var(--muted); background: var(--bg); }
+  .compare {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
+    font-size: 0.9rem; display: grid; gap: 4px;
+  }
+  .umbrella { display: flex; align-items: center; gap: 14px; border-left: 6px solid var(--muted); }
+  .umbrella.must { border-left-color: #2f6fde; }
+  .umbrella.maybe { border-left-color: #e0a100; }
+  .umbrella.no { border-left-color: #2e9e5b; }
+  .umbrella .u-icon { font-size: 2.4rem; }
+  .umbrella .u-title { font-size: 1.1rem; font-weight: 700; }
+  .umbrella .u-detail { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+
+  .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .card-head h2 { margin: 0; }
+  .card-head button { padding: 6px 10px; font-size: 0.8rem; }
+  .stock {
+    display: grid; grid-template-columns: 1fr auto; gap: 2px 12px;
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+  }
+  .stock:last-of-type { border-bottom: none; }
+  .stock .s-name { font-weight: 600; }
+  .stock .s-price { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stock .s-time { font-size: 0.75rem; color: var(--muted); }
+  .stock .s-chg { text-align: right; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+  .s-chg.up { color: #d64545; }
+  .s-chg.down { color: #2f6fde; }
+  .note { font-size: 0.75rem; color: var(--muted); margin: 10px 0 0; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px; margin-top: 16px;
+  }
+  .stat { background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+  .stat .label { font-size: 0.8rem; color: var(--muted); }
+  .stat .value { font-size: 1.1rem; font-weight: 600; }
+
+  .hourly { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+  .hour {
+    flex: 0 0 64px; text-align: center; padding: 10px 4px;
+    background: var(--bg); border-radius: 10px;
+  }
+  .hour .t { font-size: 0.8rem; color: var(--muted); }
+  .hour .i { font-size: 1.5rem; margin: 4px 0; }
+  .hour .p { font-size: 0.75rem; color: var(--accent); }
+
+  .day {
+    display: grid; grid-template-columns: 70px 36px 1fr auto;
+    align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--line);
+  }
+  .day:last-child { border-bottom: none; }
+  .day .rain { font-size: 0.8rem; color: var(--accent); }
+  .day .range { font-variant-numeric: tabular-nums; }
+  .day .range .lo { color: var(--muted); margin-right: 6px; }
+
+  .msg { text-align: center; color: var(--muted); padding: 24px; }
+  .error { color: #d64545; }
+</style>
+</head>
+<body>
+<main>
+  <header class="top">
+    <h1>🌤️ 오늘의 날씨</h1>
+    <a id="mailBadge" class="mail" href="https://mail.naver.com/" target="_blank" rel="noopener" title="네이버 메일 열기">📧 네이버 메일</a>
+  </header>
+
+  <!-- 네이버 메일 로그인 창 (로그인 전일 때 메일 버튼을 누르면 열림) -->
+  <form class="card login" id="mailLogin" hidden>
+    <h2>📧 네이버 메일 연결</h2>
+    <p class="note">오늘 받은 메일 수를 세려면 한 번 로그인이 필요해요. 정보는 이 PC에만 암호화되어 저장돼요.<br>
+      먼저 네이버 메일 › 환경설정 › POP3/IMAP 설정에서 <b>IMAP 사용</b>을 켜 주세요.
+      2단계 인증을 쓰면 <b>애플리케이션 비밀번호</b>를 입력하세요.</p>
+    <div class="login-row">
+      <input id="mailId" type="text" placeholder="네이버 아이디" autocomplete="username">
+      <input id="mailPw" type="password" placeholder="비밀번호" autocomplete="current-password">
+      <button type="submit" id="mailLoginBtn">로그인</button>
+    </div>
+    <p class="msg error" id="mailLoginMsg" hidden></p>
+  </form>
+
+  <form class="search" id="searchForm">
+    <input id="cityInput" type="text" placeholder="도시 이름 입력 (예: 서울, 부산, Tokyo)" autocomplete="off">
+    <button type="submit">검색</button>
+    <button type="button" class="secondary" id="locBtn" title="현재 위치">📍</button>
+  </form>
+
+  <div id="app"><p class="msg">불러오는 중…</p></div>
+  <div id="stocks"></div>
+</main>
+
+<script>
+  // 날씨 데이터: Open-Meteo (API 키 필요 없음) https://open-meteo.com
+
+  // WMO 날씨 코드 → [아이콘, 한글 설명]
+  const WEATHER = {
+    0: ["☀️", "맑음"], 1: ["🌤️", "대체로 맑음"], 2: ["⛅", "구름 조금"], 3: ["☁️", "흐림"],
+    45: ["🌫️", "안개"], 48: ["🌫️", "짙은 안개"],
+    51: ["🌦️", "약한 이슬비"], 53: ["🌦️", "이슬비"], 55: ["🌧️", "강한 이슬비"],
+    56: ["🌧️", "어는 이슬비"], 57: ["🌧️", "어는 이슬비"],
+    61: ["🌧️", "약한 비"], 63: ["🌧️", "비"], 65: ["🌧️", "강한 비"],
+    66: ["🌧️", "어는 비"], 67: ["🌧️", "어는 비"],
+    71: ["🌨️", "약한 눈"], 73: ["🌨️", "눈"], 75: ["❄️", "많은 눈"], 77: ["🌨️", "싸락눈"],
+    80: ["🌦️", "소나기"], 81: ["🌧️", "소나기"], 82: ["⛈️", "강한 소나기"],
+    85: ["🌨️", "눈 소나기"], 86: ["❄️", "강한 눈 소나기"],
+    95: ["⛈️", "뇌우"], 96: ["⛈️", "우박 동반 뇌우"], 99: ["⛈️", "강한 우박 뇌우"],
+  };
+  const weatherOf = (code) => WEATHER[code] || ["❔", "알 수 없음"];
+  const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
+
+  const app = document.getElementById("app");
+
+  // 검색 API는 한글 도시명을 인식하지 못해서, 자주 쓰는 도시는 영문으로 바꿔서 검색
+  const KO_CITY = {
+    "서울": "Seoul", "부산": "Busan", "인천": "Incheon", "대구": "Daegu", "대전": "Daejeon",
+    "광주": "Gwangju", "울산": "Ulsan", "세종": "Sejong", "수원": "Suwon", "성남": "Seongnam",
+    "고양": "Goyang", "용인": "Yongin", "창원": "Changwon", "청주": "Cheongju", "전주": "Jeonju",
+    "천안": "Cheonan", "포항": "Pohang", "제주": "Jeju", "서귀포": "Seogwipo", "춘천": "Chuncheon",
+    "강릉": "Gangneung", "원주": "Wonju", "여수": "Yeosu", "목포": "Mokpo", "순천": "Suncheon",
+    "경주": "Gyeongju", "안동": "Andong", "김해": "Gimhae", "속초": "Sokcho", "평택": "Pyeongtaek",
+    "도쿄": "Tokyo", "오사카": "Osaka", "베이징": "Beijing", "상하이": "Shanghai", "방콕": "Bangkok",
+    "뉴욕": "New York", "런던": "London", "파리": "Paris", "로스앤젤레스": "Los Angeles", "시드니": "Sydney",
+  };
+
+  // 1) 도시 이름 → 위도/경도
+  async function geocode(name) {
+    const query = KO_CITY[name.replace(/(특별시|광역시|특별자치시|특별자치도|시)$/, "")] || name;
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=ko`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.results || data.results.length === 0) {
+      const hint = /[가-힣]/.test(name) ? " 영문으로 입력해 보세요 (예: Seoul)." : "";
+      throw new Error(`'${name}'을(를) 찾을 수 없어요.${hint}`);
+    }
+    const r = data.results[0];
+    return { lat: r.latitude, lon: r.longitude, name: r.name, country: r.country || "" };
+  }
+
+  // 2) 위도/경도 → 날씨
+  async function getWeather(lat, lon) {
+    const params = new URLSearchParams({
+      latitude: lat, longitude: lon, timezone: "auto", forecast_days: 7,
+      past_days: 1, // 어제 데이터도 함께 받아서 비교에 사용
+      current: "temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,precipitation",
+      hourly: "temperature_2m,weather_code,precipitation_probability,precipitation",
+      daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    });
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+    if (!res.ok) throw new Error("날씨 정보를 가져오지 못했어요.");
+    const w = await res.json();
+
+    // 어제 같은 시각의 기온 (시간별 데이터에서 지금보다 24칸 앞)
+    const nowIdx = w.hourly.time.findIndex((t) => t >= w.current.time.slice(0, 13));
+    w.yesterday = {
+      tempNow: nowIdx >= 24 ? w.hourly.temperature_2m[nowIdx - 24] : null,
+      max: w.daily.temperature_2m_max[0],
+      min: w.daily.temperature_2m_min[0],
+    };
+
+    // 일별 데이터의 첫날(어제)은 비교용으로만 쓰고, 예보 목록에서는 빼기
+    for (const key of Object.keys(w.daily)) w.daily[key] = w.daily[key].slice(1);
+    return w;
+  }
+
+  // 어제와 비교한 문구 만들기: 양수면 더 따뜻, 음수면 더 추움
+  function compareText(today, yesterday, prefix) {
+    if (yesterday == null) return "";
+    const diff = Math.round(today - yesterday);
+    const pre = prefix ? prefix + " " : "";
+    if (diff > 0) return `<span class="diff up">▲ ${pre}${diff}° 높아요</span>`;
+    if (diff < 0) return `<span class="diff down">▼ ${pre}${-diff}° 낮아요</span>`;
+    return `<span class="diff same">${prefix ? "어제와 " : ""}같아요</span>`;
+  }
+
+  // 우산 판단: 오늘 남은 시간(지금 ~ 23시)의 강수확률과 예상 강수량을 봄
+  const SNOW_CODES = [71, 73, 75, 77, 85, 86];
+  function umbrellaAdvice(w, startIdx) {
+    const today = w.current.time.slice(0, 10);
+    let maxProb = 0, sum = 0, rainHour = null, snow = false;
+    for (let k = startIdx; k < w.hourly.time.length && w.hourly.time[k].startsWith(today); k++) {
+      const p = w.hourly.precipitation_probability[k] ?? 0;
+      maxProb = Math.max(maxProb, p);
+      sum += w.hourly.precipitation[k] ?? 0;
+      if (rainHour === null && p >= 50) rainHour = Number(w.hourly.time[k].slice(11, 13));
+      if (SNOW_CODES.includes(w.hourly.weather_code[k])) snow = true;
+    }
+    sum = Math.round(sum * 10) / 10;
+    const rain = snow ? "눈" : "비";
+
+    if (maxProb >= 60 || sum >= 1) {
+      const when = rainHour !== null ? `${rainHour}시쯤부터 ` : "";
+      return { level: "must", icon: "☔", title: "우산 꼭 챙기세요!",
+        detail: `${when}${rain} 소식이 있어요 · 강수확률 최대 ${maxProb}%, 예상 ${sum}mm` };
+    }
+    if (maxProb >= 30) {
+      return { level: "maybe", icon: "🌂", title: "접이식 우산을 챙기면 좋아요",
+        detail: `${snow ? "눈이" : "비가"} 올 수도 있어요 · 강수확률 최대 ${maxProb}%` };
+    }
+    return { level: "no", icon: "😎", title: "오늘은 우산 필요 없어요",
+      detail: `오늘 남은 시간 강수확률 최대 ${maxProb}%` };
+  }
+
+  // 3) 화면에 그리기
+  function render(place, w) {
+    const c = w.current;
+    const [icon, desc] = weatherOf(c.weather_code);
+
+    // 지금부터 24시간
+    const startIdx = Math.max(0, w.hourly.time.findIndex((t) => t >= c.time.slice(0, 13)));
+    const hours = w.hourly.time.slice(startIdx, startIdx + 24).map((t, i) => {
+      const k = startIdx + i;
+      const [hi] = weatherOf(w.hourly.weather_code[k]);
+      return `<div class="hour">
+        <div class="t">${i === 0 ? "지금" : Number(t.slice(11, 13)) + "시"}</div>
+        <div class="i">${hi}</div>
+        <div>${Math.round(w.hourly.temperature_2m[k])}°</div>
+        <div class="p">${w.hourly.precipitation_probability[k] ?? 0}%</div>
+      </div>`;
+    }).join("");
+
+    const days = w.daily.time.map((d, i) => {
+      const date = new Date(d + "T00:00");
+      const label = i === 0 ? "오늘" : `${DAYS[date.getDay()]} ${date.getMonth() + 1}/${date.getDate()}`;
+      const [di, dd] = weatherOf(w.daily.weather_code[i]);
+      return `<div class="day">
+        <div>${label}</div>
+        <div style="font-size:1.4rem">${di}</div>
+        <div>${dd} <span class="rain">💧${w.daily.precipitation_probability_max[i] ?? 0}%</span></div>
+        <div class="range"><span class="lo">${Math.round(w.daily.temperature_2m_min[i])}°</span>${Math.round(w.daily.temperature_2m_max[i])}°</div>
+      </div>`;
+    }).join("");
+
+    app.innerHTML = `
+      <section class="card">
+        <div class="now">
+          <div class="icon">${icon}</div>
+          <div>
+            <div class="place">${place}</div>
+            <div class="temp">${Math.round(c.temperature_2m)}°C</div>
+            <div>${compareText(c.temperature_2m, w.yesterday.tempNow, "어제 이 시간보다")}</div>
+            <div class="desc">${desc} · 최고 ${Math.round(w.daily.temperature_2m_max[0])}° / 최저 ${Math.round(w.daily.temperature_2m_min[0])}°</div>
+          </div>
+        </div>
+        <div class="compare">
+          <div>어제 최고 ${Math.round(w.yesterday.max)}° → 오늘 최고 ${Math.round(w.daily.temperature_2m_max[0])}° ${compareText(w.daily.temperature_2m_max[0], w.yesterday.max, "")}</div>
+          <div>어제 최저 ${Math.round(w.yesterday.min)}° → 오늘 최저 ${Math.round(w.daily.temperature_2m_min[0])}° ${compareText(w.daily.temperature_2m_min[0], w.yesterday.min, "")}</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="label">체감 온도</div><div class="value">${Math.round(c.apparent_temperature)}°C</div></div>
+          <div class="stat"><div class="label">습도</div><div class="value">${c.relative_humidity_2m}%</div></div>
+          <div class="stat"><div class="label">바람</div><div class="value">${(c.wind_speed_10m / 3.6).toFixed(1)} m/s</div></div>
+          <div class="stat"><div class="label">강수량</div><div class="value">${c.precipitation} mm</div></div>
+        </div>
+      </section>
+      ${(() => {
+        const u = umbrellaAdvice(w, startIdx);
+        return `<section class="card umbrella ${u.level}">
+          <div class="u-icon">${u.icon}</div>
+          <div><div class="u-title">${u.title}</div><div class="u-detail">${u.detail}</div></div>
+        </section>`;
+      })()}
+      <section class="card"><h2>시간별 예보</h2><div class="hourly">${hours}</div></section>
+      <section class="card"><h2>7일 예보</h2>${days}</section>`;
+  }
+
+  function showError(msg) {
+    app.innerHTML = `<p class="msg error">${msg}</p>`;
+  }
+
+  async function loadCity(name) {
+    app.innerHTML = `<p class="msg">불러오는 중…</p>`;
+    try {
+      const p = await geocode(name);
+      const w = await getWeather(p.lat, p.lon);
+      render(`${p.name}${p.country ? ", " + p.country : ""}`, w);
+      localStorage.setItem("lastCity", name);
+    } catch (e) {
+      showError(e.message);
+    }
+  }
+
+  function loadMyLocation() {
+    if (!navigator.geolocation) return showError("이 브라우저는 위치 정보를 지원하지 않아요.");
+    app.innerHTML = `<p class="msg">현재 위치 확인 중…</p>`;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const w = await getWeather(pos.coords.latitude, pos.coords.longitude);
+          render("📍 현재 위치", w);
+        } catch (e) { showError(e.message); }
+      },
+      () => showError("위치 권한이 거부되었어요. 도시 이름으로 검색해 주세요.")
+    );
+  }
+
+  document.getElementById("searchForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("cityInput").value.trim();
+    if (name) loadCity(name);
+  });
+  document.getElementById("locBtn").addEventListener("click", loadMyLocation);
+
+  // 4) 주식 시장 — serve.ps1 서버의 /api/stock 이 Yahoo Finance 시세를 중계해 줌
+  const STOCKS = [
+    ["^KS11", "코스피"], ["^KQ11", "코스닥"], ["005930.KS", "삼성전자"],
+    ["^GSPC", "S&P 500"], ["^IXIC", "나스닥"], ["KRW=X", "원/달러 환율"],
+  ];
+
+  function fmt(n, digits = 2) {
+    return n.toLocaleString("ko-KR", { minimumFractionDigits: digits, maximumFractionDigits: digits });
+  }
+
+  async function loadStocks() {
+    const box = document.getElementById("stocks");
+    const head = `<div class="card-head"><h2>📈 주식 시장</h2><button type="button" class="secondary" id="stockRefresh">새로고침</button></div>`;
+    box.innerHTML = `<section class="card">${head}<p class="msg">불러오는 중…</p></section>`;
+    try {
+      const res = await fetch("/api/stock?symbols=" + encodeURIComponent(STOCKS.map((s) => s[0]).join(",")));
+      if (!res.ok) throw new Error();
+      const list = await res.json();
+      const rows = list.map((q) => {
+        const name = (STOCKS.find((s) => s[0] === q.symbol) || [q.symbol, q.symbol])[1];
+        if (q.error) return `<div class="stock"><div class="s-name">${name}</div><div class="s-price">-</div><div class="s-time">불러오기 실패</div><div></div></div>`;
+        const unit = q.currency === "KRW" && !q.symbol.startsWith("^") ? "원" : "";  // 지수는 단위 없음
+        const digits = /\.(KS|KQ)$/.test(q.symbol) ? 0 : 2;                         // 국내 주식은 소수점 없음
+        const price = fmt(q.price, digits) + unit;
+        const dir = q.change > 0 ? "up" : q.change < 0 ? "down" : "";
+        const arrow = q.change > 0 ? "▲" : q.change < 0 ? "▼" : "-";
+        const t = new Date(q.time * 1000);
+        const time = `${t.getMonth() + 1}/${t.getDate()} ${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")} 기준`;
+        return `<div class="stock">
+          <div class="s-name">${name}</div>
+          <div class="s-price">${price}</div>
+          <div class="s-time">${time}</div>
+          <div class="s-chg ${dir}">${arrow} ${fmt(Math.abs(q.change), digits)} (${q.pct > 0 ? "+" : ""}${fmt(q.pct)}%)</div>
+        </div>`;
+      }).join("");
+      box.innerHTML = `<section class="card">${head}${rows}<p class="note">전일 종가 대비 · 자료: Yahoo Finance (지연될 수 있음)</p></section>`;
+    } catch {
+      box.innerHTML = `<section class="card">${head}<p class="msg error">주식 정보를 불러오지 못했어요.<br>파일을 직접 열지 말고 <b>실행.bat</b>으로 앱을 실행해 주세요.</p></section>`;
+    }
+    document.getElementById("stockRefresh").addEventListener("click", loadStocks);
+  }
+
+  loadStocks();
+
+  // 5) 오늘 받은 네이버 메일 수 — serve.ps1 이 IMAP으로 확인해 줌. 클릭하면 네이버 메일로 이동
+  const badge = document.getElementById("mailBadge");
+  const loginForm = document.getElementById("mailLogin");
+  const loginMsg = document.getElementById("mailLoginMsg");
+  let mailLoggedIn = false;
+
+  function showMailCount(m) {
+    mailLoggedIn = true;
+    loginForm.hidden = true;
+    badge.innerHTML = `📧 오늘 받은 메일 <b>${m.today}</b>통` +
+      (m.unread > 0 ? ` <span class="unread">안 읽음 ${m.unread}</span>` : "");
+    badge.title = `${m.checkedAt} 기준 · 클릭하면 네이버 메일로 이동`;
+  }
+
+  function showNeedLogin(error) {
+    mailLoggedIn = false;
+    badge.innerHTML = `📧 오늘 받은 메일 <b>?</b>통 <span class="unread">로그인</span>`;
+    badge.title = "눌러서 네이버 메일 로그인";
+    if (error) { loginMsg.textContent = error; loginMsg.hidden = false; loginForm.hidden = false; }
+  }
+
+  async function loadMail() {
+    try {
+      const res = await fetch("/api/mail");
+      if (!res.ok) throw new Error();
+      const m = await res.json();
+      if (m.enabled && !m.error) showMailCount(m);
+      else if (m.enabled && m.error) { badge.innerHTML = `📧 네이버 메일 <span class="unread">확인 실패</span>`; badge.title = m.error; }
+      else showNeedLogin(m.error);
+    } catch {
+      // 파일을 직접 연 경우: 개수 없이 링크만
+      badge.title = "메일 수를 보려면 실행.bat으로 앱을 여세요 · 클릭하면 네이버 메일로 이동";
+    }
+  }
+
+  // 로그인 전이면 버튼을 눌렀을 때 네이버로 가지 않고 로그인 창을 엶
+  badge.addEventListener("click", (e) => {
+    if (mailLoggedIn || location.protocol === "file:") return;
+    e.preventDefault();
+    loginForm.hidden = !loginForm.hidden;
+    if (!loginForm.hidden) document.getElementById("mailId").focus();
+  });
+
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = document.getElementById("mailId").value.trim();
+    const pw = document.getElementById("mailPw").value;
+    if (!id || !pw) return;
+    const btn = document.getElementById("mailLoginBtn");
+    btn.disabled = true; btn.textContent = "확인 중…"; loginMsg.hidden = true;
+    try {
+      const res = await fetch("/api/mail/login", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, pw }),
+      });
+      const m = await res.json();
+      if (m.enabled && !m.error) { document.getElementById("mailPw").value = ""; showMailCount(m); }
+      else { loginMsg.textContent = m.error || "로그인하지 못했어요."; loginMsg.hidden = false; }
+    } catch {
+      loginMsg.textContent = "서버에 연결하지 못했어요. 실행.bat이 켜져 있는지 확인하세요.";
+      loginMsg.hidden = false;
+    }
+    btn.disabled = false; btn.textContent = "로그인";
+  });
+
+  loadMail();
+  setInterval(loadMail, 5 * 60 * 1000);   // 5분마다 새로 확인
+
+  // 시작: 마지막으로 검색한 도시, 없으면 서울
+  let last = "서울";
+  try { last = localStorage.getItem("lastCity") || "서울"; } catch {}
+  loadCity(last);
+</script>
+</body>
+</html>
